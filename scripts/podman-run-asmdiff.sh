@@ -6,13 +6,14 @@
 # ./riscv64-build.sh && ./riscv64-build-core-root.sh
 # cp ~/code/jitutils/artifacts/linux-riscv64/lib/libcoredistools.so* $CORE_ROOT
 
+CONFIG=Checked # Release / Checked / Debug 
 podman run \
     -it \
     -v $HOME/code/forks/runtime:/runtime \
-    -w /runtime/artifacts/tests/coreclr/linux.riscv64.Checked/Tests/Core_Root \
-    -e CORE_ROOT=/runtime/artifacts/tests/coreclr/linux.riscv64.Checked/Tests/Core_Root \
-    -e CORE_ROOT_BASE=/runtime/artifacts/tests/coreclr/linux.riscv64.Checked/Tests/Core_Rootbase \
-    -e ATEST=/runtime/artifacts/tests/coreclr/linux.riscv64.Checked \
+    -w /runtime/artifacts/tests/coreclr/linux.riscv64.$CONFIG/Tests/Core_Root \
+    -e CORE_ROOT=/runtime/artifacts/tests/coreclr/linux.riscv64.$CONFIG/Tests/Core_Root \
+    -e CORE_ROOT_BASE=/runtime/artifacts/tests/coreclr/linux.riscv64.$CONFIG/Tests/Core_Rootbase \
+    -e ATEST=/runtime/artifacts/tests/coreclr/linux.riscv64.$CONFIG \
     --platform linux/riscv64 \
     riscv64-ubuntu-runtime \
     sh -c "\

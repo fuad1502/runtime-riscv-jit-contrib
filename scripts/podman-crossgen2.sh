@@ -1,8 +1,9 @@
+CONFIG=Checked # Release / Checked / Debug 
 podman run \
     -it \
     -v $HOME/code/forks/runtime:/runtime \
     -w /runtime \
-    -e CORE_ROOT=/runtime/artifacts/tests/coreclr/linux.riscv64.Checked/Tests/Core_Root \
+    -e CORE_ROOT=/runtime/artifacts/tests/coreclr/linux.riscv64.$CONFIG/Tests/Core_Root \
     -e INPUT_DLL=/runtime/test-dlls/cext.dll \
     -e OUTPUT_DLL=/runtime/test-dlls/cext.ni.dll \
     --platform linux/amd64 \
