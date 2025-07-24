@@ -29,10 +29,10 @@ git clone https://github.com/fuad1502/runtime.git # Change this to your runtime 
 
 ```sh
 cd runtime-riscv-jit-contrib
-podman build -t coreclr-dbg Dockerfiles/coredlr-dbg/
-podman build -t coreclr-r2r Dockerfiles/coredlr-r2r/
-podman build -t coreclr-test Dockerfiles/coredlr-test/
-podman build -t riscv64-ubuntu-runtime Dockerfiles/riscv64-ubuntu-runtime/
+podman build -t coreclr-dbg Dockerfiles/coreclr-gdb/
+podman build -t coreclr-r2r Dockerfiles/coreclr-r2r/
+podman build -t coreclr-test Dockerfiles/coreclr-test/
+podman build -t riscv64-ubuntu-runtime --platform linux/riscv64 Dockerfiles/riscv64-ubuntu-runtime/
 ```
 
 ### Link scripts to runtime repository
@@ -58,7 +58,7 @@ Assuming you're runtime repository is located at `$RUNTIME_DIR`:
 ```sh
 cd runtime-riscv-jit-contrib
 mkdir $RUNTIME_DIR/.tools
-tar -xzvf rootfs.tar.gz $RUNTIME_DIR/.tools
+tar -xzvf rootfs.tar.gz -C $RUNTIME_DIR/.tools
 ```
 
 ## Building
