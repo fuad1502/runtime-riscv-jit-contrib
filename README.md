@@ -16,13 +16,13 @@ sudo apt install git podman qemu-user-static
 
 2. Fork `dotnet/runtime`
 
-Using your personal [github.com] account, fork `dotnet/runtime` upstream repository at [github.com/dotnet/runtime].
+Using your personal [github.com](github.com) account, fork `dotnet/runtime` upstream repository at [github.com/dotnet/runtime](github.com/dotnet/runtime).
 
 3. Clone repositories
 
 ```sh
 git clone https://github.com/fuad1502/runtime-riscv-jit-contrib.git
-git clone https://gituhb.com/fuad1502/runtime.git # Change this to your runtime fork
+git clone https://github.com/fuad1502/runtime.git # Change this to your runtime fork
 ```
 
 ### Build containers
