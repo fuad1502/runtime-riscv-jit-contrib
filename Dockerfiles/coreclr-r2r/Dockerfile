@@ -14,5 +14,3 @@ RUN apt install -y qemu-user-static
 RUN apt install -y debootstrap
 
 RUN /usr/sbin/update-binfmts --enable qemu-riscv64
-
-CMD bash
