@@ -39,6 +39,7 @@ podman build -t riscv64-ubuntu-runtime Dockerfiles/riscv64-ubuntu-runtime/
 
 ```sh
 cd runtime
+ln -s ../runtime-riscv-jit-contrib/scripts/podman-create-mch.sh .
 ln -s ../runtime-riscv-jit-contrib/scripts/podman-crossgen2.sh .
 ln -s ../runtime-riscv-jit-contrib/scripts/podman-r2rdump.sh
 ln -s ../runtime-riscv-jit-contrib/scripts/podman-run-asmdiff.sh .
@@ -111,13 +112,55 @@ The `Core_Root` directory will be generated at `$RUNTIME_DIR/artifacts/tests/cor
 
 ### Running CoreCLR tests
 
+Modify the following line in `podman-run-test.sh` to the test directory you would like to test:
+
+```
+# ...
+    -e TEST_DIR=./JIT/jit64/opt/cse/HugeField2\
+# ...
+```
+
+You can also add `JitDisasm` or `JitDisasm` environment variables if you like to. Then, execute:
+
+```sh
+./podman-run-test.sh
+```
+
 ### Run assembly diffs
 
 1. Build `dotnet/jitutils`
 
 2. Create MCH file
 
+The MCH file is created using the "base" runtime. The "base" runtime is the latest commit not including your changes.
+
+```sh
+git checkout main # change main to a commit id if the base is not at main
+./riscv64-full-build.sh
+./riscv64-build-core-root.sh
+./podman-create-mch.sh
+```
+
 3. Perform diffs
+
+First, copy the previously built base `Core_Root` to `Core_Rootbase`:
+
+```sh
+export CORE_ROOT=$RUNTIME_DIR/artifacts/tests/coreclr/linux.riscv64.$CONFIG/Tests/Core_Root
+export CORE_ROOT_BASE=$RUNTIME_DIR/artifacts/tests/coreclr/linux.riscv64.$CONFIG/Tests/Core_Rootbase
+cp -r CORE_ROOT CORE_ROOT_BASE
+```
+
+Then, build the runtime with your changes and run asm diffs:
+
+```sh
+git checkout feature-branch
+./riscv64-full-build.sh
+./riscv64-build-core-root.sh
+./podman-run-asmdiff.sh
+```
+
+If successful, the diff summary will be generated at `$RUNTIME_DIR/artifacts/spmi/diff_summary.md`.
 
 ### Crossgen2 & R2RDump
 
